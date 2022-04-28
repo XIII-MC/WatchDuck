@@ -118,7 +118,7 @@ public class PlayerData {
         lasthurt = System.currentTimeMillis();
         registerCheck(new SpeedA());
         registerCheck(new TpAuraA());
-
+        registerCheck(new TpAuraB());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());

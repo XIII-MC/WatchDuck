@@ -10,8 +10,6 @@ Speed A:
     ban: false
     punishVL: 12
   Messages:
-    kickMessage: You were kicked for Unfair Advantage.
-    banMessage: You were banned for Unfair Advantage.
     broadcastPunish: true
 
 TpAura A:
@@ -24,9 +22,21 @@ TpAura A:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 5
   Messages:
-    kickMessage: You were kicked for Unfair Advantage.
-    banMessage: You were banned for Unfair Advantage.
+    broadcastPunish: true
+
+TpAura B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 1
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 5
+  Messages:
     broadcastPunish: true
 

@@ -1,10 +1,10 @@
-package com.xiii.watchduck.check.checks;
-
+//package com.xiii.watchduck.check.checks;
+//
+//import com.xiii.watchduck.check.Category;
+//import com.xiii.watchduck.check.Check;
+//import com.xiii.watchduck.check.CheckInfo;
+//import com.xiii.watchduck.exempt.ExemptType;
 //import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
-//import watchduck.check.Category;
-//import watchduck.check.Check;
-//import watchduck.check.CheckInfo;
-//import watchduck.exempt.ExemptType;
 //
 //@CheckInfo(name = "Check CheckType", category = Category.MOVEMENT)
 //public class CheckCheckType extends Check {
