@@ -1,0 +1,16 @@
+Speed A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 6
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Message:
+    kickMessage: You were kicked for Unfair Advantage.
+    banMessage: You were banned for Unfair Advantage.
+    broadcastPunish: true
+    broadcastMessage: WatchDuck removed %player% due to Unfair Advantage.
