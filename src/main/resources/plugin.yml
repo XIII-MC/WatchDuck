@@ -1,13 +1,13 @@
 name: WatchDuck
 version: '${project.version}'
-main: com.xiii.watchduck.watchduck.WatchDuck
+main: com.xiii.watchduck.WatchDuck
 api-version: 1.18
-prefix: [ WATCHDUCK ]
+prefix: WATCHDUCK
 authors: [ XIII___ ]
 description: WatchDuck Anti-Cheat
 load: POSTWORLD
 commands:
-  guard:
+  watchduck:
     description: WatchDuck Anti-Cheat main command.
     usage: /watchduck
     permission: watchduck.command

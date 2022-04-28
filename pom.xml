@@ -32,15 +32,22 @@
         <artifactId>maven-shade-plugin</artifactId>
         <version>3.2.4</version>
         <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
-            </configuration>
-          </execution>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+                <configuration>
+                    <minimizeJar>true</minimizeJar>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <relocations>
+                        <relocation>
+                            <pattern>io.github.retrooper.packetevents</pattern>
+                            <shadedPattern>io.github.retrooper.customplugin.packetevents</shadedPattern> <!--relocate packetevents package. choose something unique!-->
+                        </relocation>
+                    </relocations>
+                </configuration>
+            </execution>
         </executions>
       </plugin>
     </plugins>
@@ -84,7 +91,7 @@
           <groupId>com.github.retrooper</groupId>
           <artifactId>packetevents</artifactId>
           <version>v1.8-pre-19</version>
-          <scope>provided</scope>
+          <scope>compile</scope>
       </dependency>
       <dependency>
           <groupId>org.projectlombok</groupId>
