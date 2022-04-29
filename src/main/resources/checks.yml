@@ -6,27 +6,13 @@ Speed A:
     maxBuffer: 6
     removeBuffer: 1
   Punishments:
-    kick: true
+    kick: false
     ban: false
     punishVL: 12
   Messages:
     broadcastPunish: true
 
-TpAura A:
-  silent: false
-  enabled: true
-  Buffer:
-    addBuffer: 0
-    maxBuffer: 0
-    removeBuffer: 0
-  Punishments:
-    kick: true
-    ban: false
-    punishVL: 5
-  Messages:
-    broadcastPunish: true
-
-TpAura B:
+BadPacket A:
   silent: false
   enabled: true
   Buffer:
@@ -36,7 +22,8 @@ TpAura B:
   Punishments:
     kick: true
     ban: false
-    punishVL: 5
+    punishVL: 3
   Messages:
     broadcastPunish: true
+
 

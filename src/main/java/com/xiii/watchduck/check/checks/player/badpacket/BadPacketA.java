@@ -1,4 +1,4 @@
-package com.xiii.watchduck.check.checks.combat.TpAura;
+package com.xiii.watchduck.check.checks.player.badpacket;
 
 import com.xiii.watchduck.check.Category;
 import com.xiii.watchduck.check.Check;
@@ -7,8 +7,8 @@ import com.xiii.watchduck.exempt.ExemptType;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 
-@CheckInfo(name = "TpAura B", category = Category.MOVEMENT)
-public class TpAuraB extends Check {
+@CheckInfo(name = "BadPacket A", category = Category.MOVEMENT)
+public class BadPacketA extends Check {
 
     double lastms;
     boolean didntmove = false;

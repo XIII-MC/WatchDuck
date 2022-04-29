@@ -1,6 +1,7 @@
 package com.xiii.watchduck.data;
 
 import com.xiii.watchduck.check.CheckInfo;
+import com.xiii.watchduck.check.checks.player.badpacket.BadPacketA;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -18,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import com.xiii.watchduck.WatchDuck;
 import com.xiii.watchduck.check.Check;
-import com.xiii.watchduck.check.checks.combat.TpAura.TpAuraA;
 import com.xiii.watchduck.check.checks.movement.speed.SpeedA;
 import com.xiii.watchduck.exempt.Exempt;
 import com.xiii.watchduck.utils.PastLocation;
@@ -117,8 +117,7 @@ public class PlayerData {
         player = Bukkit.getPlayer(uuid);
         lasthurt = System.currentTimeMillis();
         registerCheck(new SpeedA());
-        registerCheck(new TpAuraA());
-        registerCheck(new TpAuraB());
+        registerCheck(new BadPacketA());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
@@ -129,6 +128,18 @@ public class PlayerData {
 
     public double getTPS() {
         return PacketEvents.get().getServerUtils().getTPS();
+    }
+
+    public double getDistance(boolean y) {
+        if(sfrom != null) {
+            if (y) {
+                Location newloc = sto.clone();
+                newloc.setY(sfrom.clone().getY());
+                return newloc.distance(sfrom.clone());
+            }
+            return sto.clone().distance(sfrom.clone()); // sto.distance(sfrom)
+        }
+        return 0;
     }
 
     public void registerCheck(Check check) {
@@ -213,17 +224,23 @@ public class PlayerData {
             final String text = "§fCheck §8» §b" + check.name + " \n§fInformation §8» §b" + Info + " \n§fValue: §8» §b" + Value + " \n§fBuffer §8» §b" + Buffer + "§8/§b" + maxBuffer;
             for (Player p : Bukkit.getOnlinePlayers()) {
                 boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode");
+                boolean ena = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + "enabled");
                 PlayerData data = Data.data.getUserData(p);
                 if ((data.alertstoggled && !d) || (d && !p.getName().equals(player.getName()))) {
-                    TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
-                    Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,new ComponentBuilder(text).create()));
-                    p.spigot().sendMessage(Flag);
+                    if (ena == true) {
+                        TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
+                        Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
+                        p.spigot().sendMessage(Flag);
+                    }
                 }
             }
             if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode")) {
-                TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
-                Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
-                player.spigot().sendMessage(Flag);
+                boolean ena = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + "enabled");
+                if (ena == true) {
+                    TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
+                    Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
+                    player.spigot().sendMessage(Flag);
+                }
             }
             if (getFlags(name, check.name) > treshold) {
                 ban(name, check.bannable, check.kickable ,check.name
@@ -238,10 +255,8 @@ public class PlayerData {
         } else {
             if(broadcast && ban || kick) {
                 Bukkit.broadcastMessage(" ");
-
                 Bukkit.broadcastMessage("§b§lWatchDuck §8»§c " + player.getName() + "§f has been removed for §cUnfair Advantage§f.");
                 Bukkit.broadcastMessage(" ");
-
             }
             if(ban) {
                 //Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(), WatchDuck.instance.configUtils.getConvertedStringFromConfig("checks", player, ".Messages.broadcastMessage"), );
