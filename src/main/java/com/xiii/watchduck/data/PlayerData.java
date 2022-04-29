@@ -1,6 +1,8 @@
 package com.xiii.watchduck.data;
 
 import com.xiii.watchduck.check.CheckInfo;
+import com.xiii.watchduck.check.checks.combat.killaura.KillAuraA;
+import com.xiii.watchduck.check.checks.combat.killaura.KillAuraB;
 import com.xiii.watchduck.check.checks.player.badpacket.BadPacketA;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
@@ -118,6 +120,8 @@ public class PlayerData {
         lasthurt = System.currentTimeMillis();
         registerCheck(new SpeedA());
         registerCheck(new BadPacketA());
+        registerCheck(new KillAuraA());
+        registerCheck(new KillAuraB());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
