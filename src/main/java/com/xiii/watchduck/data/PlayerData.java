@@ -1,9 +1,15 @@
 package com.xiii.watchduck.data;
 
 import com.xiii.watchduck.check.CheckInfo;
-import com.xiii.watchduck.check.checks.combat.killaura.KillAuraA;
-import com.xiii.watchduck.check.checks.combat.killaura.KillAuraB;
-import com.xiii.watchduck.check.checks.player.badpacket.BadPacketA;
+import com.xiii.watchduck.check.checks.badpacket.BadPacketB;
+import com.xiii.watchduck.check.checks.badpacket.BadPacketC;
+import com.xiii.watchduck.check.checks.badpacket.BadPacketD;
+import com.xiii.watchduck.check.checks.invalid.InvalidA;
+import com.xiii.watchduck.check.checks.jump.JumpA;
+import com.xiii.watchduck.check.checks.killaura.KillAuraA;
+import com.xiii.watchduck.check.checks.killaura.KillAuraB;
+import com.xiii.watchduck.check.checks.badpacket.BadPacketA;
+import com.xiii.watchduck.check.checks.killaura.KillAuraC;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -21,7 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import com.xiii.watchduck.WatchDuck;
 import com.xiii.watchduck.check.Check;
-import com.xiii.watchduck.check.checks.movement.speed.SpeedA;
+import com.xiii.watchduck.check.checks.speed.SpeedA;
 import com.xiii.watchduck.exempt.Exempt;
 import com.xiii.watchduck.utils.PastLocation;
 import com.xiii.watchduck.utils.SampleList;
@@ -119,9 +125,15 @@ public class PlayerData {
         player = Bukkit.getPlayer(uuid);
         lasthurt = System.currentTimeMillis();
         registerCheck(new SpeedA());
-        registerCheck(new BadPacketA());
         registerCheck(new KillAuraA());
         registerCheck(new KillAuraB());
+        registerCheck(new KillAuraC());
+        registerCheck(new BadPacketA());
+        registerCheck(new BadPacketB());
+        registerCheck(new BadPacketC());
+        registerCheck(new InvalidA());
+        registerCheck(new BadPacketD());
+        registerCheck(new JumpA());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
@@ -228,23 +240,17 @@ public class PlayerData {
             final String text = "§fCheck §8» §b" + check.name + " \n§fInformation §8» §b" + Info + " \n§fValue: §8» §b" + Value + " \n§fBuffer §8» §b" + Buffer + "§8/§b" + maxBuffer;
             for (Player p : Bukkit.getOnlinePlayers()) {
                 boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode");
-                boolean ena = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + "enabled");
                 PlayerData data = Data.data.getUserData(p);
                 if ((data.alertstoggled && !d) || (d && !p.getName().equals(player.getName()))) {
-                    if (ena == true) {
-                        TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
-                        Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
-                        p.spigot().sendMessage(Flag);
-                    }
+                    TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
+                    Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
+                    p.spigot().sendMessage(Flag);
                 }
             }
             if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode")) {
-                boolean ena = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + "enabled");
-                if (ena == true) {
-                    TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
-                    Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
-                    player.spigot().sendMessage(Flag);
-                }
+                TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
+                Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
+                player.spigot().sendMessage(Flag);
             }
             if (getFlags(name, check.name) > treshold) {
                 ban(name, check.bannable, check.kickable ,check.name

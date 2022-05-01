@@ -2,4 +2,4 @@ prefix: "§b§lWatchDuck §8»§f "
 silentChecks: false
 broadcastPunish: true
 broadcastMessage: "§b§lWatchDuck §8»§f §c%player%§f has been removed for §cUnfair Advantage§f."
-testMode: false
+testMode: true

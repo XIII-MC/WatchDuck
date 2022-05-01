@@ -81,12 +81,12 @@ public class Event implements Listener {
                 Player p = (Player) e.getEntity();
                 Data.data.registerUser(p);
                 PlayerData data = Data.data.getUserData(p);
-                if(e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)
+                if(e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION)
                     data.validVelocityHit = true;
                 else
                     data.validVelocityHit = false;
                 data.lasthurt = System.currentTimeMillis();
-                if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
+                if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK)
                     data.entityhit = System.currentTimeMillis();
 
 

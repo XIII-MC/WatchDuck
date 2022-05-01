@@ -21,6 +21,7 @@ public enum ExemptType {
     WEB(data -> data.inweb),
     CLIMBABLE(data -> data.onClimbable),
     SLIME(data -> data.sinceSlimeTicks < 30),
+    ICE(data -> data.lastice < 1200),
     NEAR_VEHICLE(data -> data.nearboat),
     INSIDE_VEHICLE(data -> System.currentTimeMillis() - data.lastnearboat < 20),
     LIQUID(data -> data.isInLiquid),

@@ -26,4 +26,114 @@ BadPacket A:
   Messages:
     broadcastPunish: true
 
+BadPacket B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: false
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
 
+BadPacket C:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: false
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+BadPacket D:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+KillAura A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+KillAura B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+KillAura C:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+Invalid A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+Jump A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 2
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
