@@ -1,4 +1,4 @@
-package com.xiii.watchduck.check.checks.player.badpacket;
+package com.xiii.watchduck.check.checks.badpacket;
 
 import com.xiii.watchduck.check.Category;
 import com.xiii.watchduck.check.Check;
