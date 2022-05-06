@@ -137,3 +137,17 @@ Jump A:
     punishVL: 3
   Messages:
     broadcastPunish: true
+
+vClip A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true

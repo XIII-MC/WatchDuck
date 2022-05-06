@@ -10,6 +10,7 @@ import com.xiii.watchduck.check.checks.killaura.KillAuraA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraB;
 import com.xiii.watchduck.check.checks.badpacket.BadPacketA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
+import com.xiii.watchduck.check.checks.vclip.vClipA;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -108,6 +109,7 @@ public class PlayerData {
     public boolean onClimbable;
     public int sinceSlimeTicks;
     public long entityhit;
+    public boolean onLowBlock;
     public int kblevel;
     public Exempt ex = new Exempt(this);
     public WrappedPacketInUseEntity.EntityUseAction useAction;
@@ -134,6 +136,7 @@ public class PlayerData {
         registerCheck(new InvalidA());
         registerCheck(new BadPacketD());
         registerCheck(new JumpA());
+        registerCheck(new vClipA());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
@@ -436,19 +439,7 @@ public class PlayerData {
         mx.add(motionX);
         my.add(motionY);
         mz.add(motionZ);
-        /** isonSlab = BlockUtils.isonSlab(player);
-         aboveSlime = wasOnSlime(255);
-         isonStair = BlockUtils.isonStair(player);
-         isOnLadder = BlockUtils.isOnLadder(player);
-         isInLiquid = BlockUtils.inLiquid(player);
-         onLowBlock = BlockUtils.isonLowBlock(player);
-         lastground2 = ground2;
-         ground2 = ground2();
-         blockabove = blockabove();
-         pistonmove = BlockUtils.pistonmove(player);
-         inweb = BlockUtils.inWeb(player);
-         onIce = BlockUtils.onIce(player);
-         onSlime = BlockUtils.onSlime(player); **/
+        onLowBlock = BlockUtils.isOnLowBlock(player);
         nearboat = false;
         predymotion = (lastmotionY - 0.08) * 0.9800000190734863;
         for (Entity e : getEntitiesAroundPoint(1.7)) {

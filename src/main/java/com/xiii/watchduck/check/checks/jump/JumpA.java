@@ -16,7 +16,7 @@ public class JumpA extends Check {
         if(motionY > 0) {
             jumpTicks++;
             if(jumpTicks == 1) {
-                if(motionY != 0.41999998688697815 && !exempt) fail("Invalid Jump", "my=" + motionY);
+                if(motionY != 0.41999998688697815 && !exempt && !data.onLowBlock) fail("Invalid Jump", "my=" + motionY);
             }
             if(motionY == 0.42 && !exempt) removeBuffer();
         } else jumpTicks = 0;
