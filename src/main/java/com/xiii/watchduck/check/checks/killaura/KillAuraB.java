@@ -13,6 +13,7 @@ public class KillAuraB extends Check {
         if(packet.getPacketId() != PacketType.Play.Client.BLOCK_DIG) {
             boolean isPost = isPost(packet.getPacketId(), PacketType.Play.Client.USE_ENTITY);
             if (isPost) fail("Post Packets", "NaN");
+            if(isPost) packet.setCancelled(true);
 
         }
     }
