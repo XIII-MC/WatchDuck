@@ -41,7 +41,7 @@ public class SpeedA extends Check {
             if(data.getDepthStriderLevel() >= 1) maxSpeed = (data.getDepthStriderLevel() * 0.03) + 0.2;
         }
 
-        if(data.lasthurt < 2000) {
+        if(isExempt(ExemptType.VELOCITY)) {
             maxSpeed = 0.8;
             if(data.kblevel >= 1) maxSpeed = (data.kblevel * 0.95);
         }
