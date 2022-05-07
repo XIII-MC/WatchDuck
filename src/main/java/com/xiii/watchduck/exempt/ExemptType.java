@@ -30,8 +30,8 @@ public enum ExemptType {
     VOID(data -> data.getPlayer().getLocation().getY() < 4),
     DEPTH_STRIDER(data -> data.getDepthStriderLevel() > 0),
     FLYING(data -> System.currentTimeMillis() - data.lastflyingtime < 3000L),
-    VELOCITY(data -> System.currentTimeMillis() - data.lastvelocity < 200L),
-    PLACE(data -> System.currentTimeMillis() - data.lastBlockplaced < 600L);
+    VELOCITY(data -> System.currentTimeMillis() - data.lastvelocity < 1500L),
+    PLACE(data -> System.currentTimeMillis() - data.lastblockplace < 800L);
 
     private final Function<PlayerData, Boolean> exception;
 

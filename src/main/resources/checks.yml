@@ -22,7 +22,7 @@ BadPacket A:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -36,7 +36,7 @@ BadPacket B:
   Punishments:
     kick: false
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -50,7 +50,7 @@ BadPacket C:
   Punishments:
     kick: false
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -58,13 +58,13 @@ BadPacket D:
   silent: false
   enabled: true
   Buffer:
-    addBuffer: 0
-    maxBuffer: 0
-    removeBuffer: 0
+    addBuffer: 1
+    maxBuffer: 3
+    removeBuffer: 1
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -78,7 +78,7 @@ KillAura A:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -92,7 +92,7 @@ KillAura B:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -106,7 +106,7 @@ KillAura C:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -120,7 +120,7 @@ Invalid A:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -129,12 +129,12 @@ Jump A:
   enabled: true
   Buffer:
     addBuffer: 1
-    maxBuffer: 2
-    removeBuffer: 1
+    maxBuffer: 1
+    removeBuffer: 0.25
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
   Messages:
     broadcastPunish: true
 
@@ -148,6 +148,62 @@ vClip A:
   Punishments:
     kick: true
     ban: false
-    punishVL: 3
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
+Fly A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 4
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
+Fly B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 10
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
+Fly C:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 2
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
+Tower A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
   Messages:
     broadcastPunish: true

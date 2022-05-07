@@ -69,7 +69,7 @@ public class Event implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
             Data.data.registerUser(e.getPlayer());
             PlayerData data = Data.data.getUserData(e.getPlayer());
-            data.lastBlockplaced = System.currentTimeMillis();
+            data.lastblockplace = System.currentTimeMillis();
             data.blockplaced = e.getBlock();
         });
     }
@@ -86,6 +86,7 @@ public class Event implements Listener {
                 else
                     data.validVelocityHit = false;
                 data.lasthurt = System.currentTimeMillis();
+                data.lastvelocity = System.currentTimeMillis();
                 if(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK)
                     data.entityhit = System.currentTimeMillis();
 
@@ -104,19 +105,19 @@ public class Event implements Listener {
                 Player p = (Player) e.getEntity();
                 Data.data.registerUser(p);
                 PlayerData data = Data.data.getUserData(p);
-                if(e.getDamager() instanceof Player || e.getDamager() instanceof Mob) {
-                    if(!((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getType().equals(Material.AIR)) {
-                        if (((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().containsEnchantment(Enchantment.KNOCKBACK))
-                            data.kblevel = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.KNOCKBACK);
+                data.lasthurtother = System.currentTimeMillis();
+                data.lastvelocity = System.currentTimeMillis();
+                //if(e.getDamager() instanceof Player || e.getDamager() instanceof Mob) {
+                //    if (((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().containsEnchantment(Enchantment.KNOCKBACK))
+                //        data.kblevel = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.KNOCKBACK);
 
-                        if (((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().containsEnchantment(Enchantment.ARROW_KNOCKBACK))
-                            data.kblevel = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.ARROW_KNOCKBACK);
-                    }
-                }
+                //    if (((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().containsEnchantment(Enchantment.ARROW_KNOCKBACK))
+                //        data.kblevel = ((LivingEntity) e.getDamager()).getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.ARROW_KNOCKBACK);
+                //}
             }
-
         });
     }
+
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onJoin(PlayerJoinEvent e) {

@@ -4,12 +4,16 @@ import com.xiii.watchduck.check.CheckInfo;
 import com.xiii.watchduck.check.checks.badpacket.BadPacketB;
 import com.xiii.watchduck.check.checks.badpacket.BadPacketC;
 import com.xiii.watchduck.check.checks.badpacket.BadPacketD;
+import com.xiii.watchduck.check.checks.fly.FlyA;
+import com.xiii.watchduck.check.checks.fly.FlyB;
+import com.xiii.watchduck.check.checks.fly.FlyC;
 import com.xiii.watchduck.check.checks.invalid.InvalidA;
 import com.xiii.watchduck.check.checks.jump.JumpA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraB;
 import com.xiii.watchduck.check.checks.badpacket.BadPacketA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
+import com.xiii.watchduck.check.checks.scaffold.TowerA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
@@ -52,6 +56,7 @@ public class PlayerData {
     public double motionX;
     public double motionY;
     public double motionZ;
+    public Location lagback;
     public double lastmotionX;
     public double lastmotionY;
     public double lastmotionZ;
@@ -59,7 +64,7 @@ public class PlayerData {
     public float deltaPitch;
     public float lastdeltaYaw;
     public float lastdeltaPitch;
-    public long lastBlockplaced;
+    public long lastblockplace;
     public long lasthurt;
     public long lasthurtother;
     public Block blockplaced;
@@ -137,6 +142,10 @@ public class PlayerData {
         registerCheck(new BadPacketD());
         registerCheck(new JumpA());
         registerCheck(new vClipA());
+        registerCheck(new FlyA());
+        registerCheck(new FlyB());
+        registerCheck(new FlyC());
+        registerCheck(new TowerA());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
@@ -240,6 +249,7 @@ public class PlayerData {
                 }
                 buf += obj.toString() + ", ";
             }
+            player.teleport(lagback);
             final String text = "§fCheck §8» §b" + check.name + " \n§fInformation §8» §b" + Info + " \n§fValue: §8» §b" + Value + " \n§fBuffer §8» §b" + Buffer + "§8/§b" + maxBuffer;
             for (Player p : Bukkit.getOnlinePlayers()) {
                 boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode");
@@ -424,7 +434,8 @@ public class PlayerData {
         if(from == null) {
             from = to;
         }
-        lastBlockplaced = System.currentTimeMillis();
+        if(playerGround) lagback = player.getLocation();
+        if(player.isFlying() || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) lastflyingtime = System.currentTimeMillis();
         test = System.currentTimeMillis();
         lastmotionX = motionX;
         lastmotionY = motionY;
