@@ -17,6 +17,7 @@ public class KillAuraA extends Check {
             WrappedPacketInUseEntity ue = new WrappedPacketInUseEntity(packet.getNMSPacket());
             if (ue.getAction() == WrappedPacketInUseEntity.EntityUseAction.ATTACK)
                 if (!cSwing) fail("Missing Packet", "NaN");
+                if(!cSwing) packet.setCancelled(true);
             cSwing = false;
         }
         if (packet.getPacketId() == PacketType.Play.Client.ARM_ANIMATION) {
