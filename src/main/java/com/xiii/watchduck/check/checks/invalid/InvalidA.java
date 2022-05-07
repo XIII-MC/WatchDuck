@@ -13,11 +13,10 @@ public class InvalidA extends Check {
     double cSpeed;
 
     public void onMove(PacketPlayReceiveEvent packet, double motionX, double motionY, double motionZ, double lastmotionX, double lastmotionY, double lastmotionZ, float deltaYaw, float deltaPitch, float lastdeltaYaw, float lastdeltaPitch) {
-        boolean exempt = isExempt(ExemptType.TELEPORT, ExemptType.JOINED);
+        boolean exempt = isExempt(ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.FLYING);
         cSpeed = data.getDistance(true);
         maxSpeed = 0.68;
-        if(data.lasthurt < 1200 || data.lasthurtother < 1200) maxSpeed += 0.32;
-
+        if(isExempt(ExemptType.VELOCITY)) maxSpeed += 0.32;
         if(cSpeed > maxSpeed && !exempt) fail("Moved too fast", "mS=" + maxSpeed + " cS=" + cSpeed);
     }
 }
