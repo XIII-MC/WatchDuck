@@ -13,7 +13,7 @@ public class BadPacketC extends Check {
     public void onPacket(PacketPlayReceiveEvent packet) {
         if(packet.getPacketId() == PacketType.Play.Client.ABILITIES) {
             boolean exempt = isExempt(ExemptType.FLYING);
-            if(!exempt) fail("Sent abilities packet", "NaN");
-        }
+            if(!exempt && !data.getPlayer().isFlying()) fail("Sent abilities packet", "NaN");
+            if(!exempt && !data.getPlayer().isFlying()) packet.setCancelled(true);}
     }
 }
