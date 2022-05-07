@@ -18,6 +18,7 @@ public class BadPacketB extends Check {
             pCount = 0;
         }
         if(pCount > 42) fail("Packet spam", "pCount=" + pCount);
+        if(pCount > 42) packet.setCancelled(true);
 
     }
 }
