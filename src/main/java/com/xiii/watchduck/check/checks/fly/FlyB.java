@@ -10,13 +10,14 @@ import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 public class FlyB extends Check {
 
     int airTicks;
-    int airLimit = 5;
+    int airLimit;
 
     public void onMove(PacketPlayReceiveEvent packet, double motionX, double motionY, double motionZ, double lastmotionX, double lastmotionY, double lastmotionZ, float deltaYaw, float deltaPitch, float lastdeltaYaw, float lastdeltaPitch) {
-        boolean exempt = isExempt(ExemptType.FLYING, ExemptType.SLIME, ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.INSIDE_VEHICLE, ExemptType.NEAR_VEHICLE, ExemptType.CLIMBABLE, ExemptType.LIQUID, ExemptType.PLACE);
+        boolean exempt = isExempt(ExemptType.FLYING, ExemptType.SLIME, ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.INSIDE_VEHICLE, ExemptType.NEAR_VEHICLE, ExemptType.CLIMBABLE, ExemptType.LIQUID, ExemptType.PLACE, ExemptType.STAIRS, ExemptType.SLAB);
+        airLimit = 6;
         if(motionY > 0.05) airTicks++;
         if(isExempt(ExemptType.VELOCITY)) airLimit += 2;
         if(airTicks > airLimit && !exempt) fail("Added Airticks", "ticks=" + airTicks);
-        if(motionY <= 0.05 && data.ground2() || data.onSolidGround || data.isOnGround()) airTicks = 0;
+        if(motionY <= 0.05 && data.isOnGround() || data.onSolidGround || data.ground2()) airTicks = 0;
     }
 }
