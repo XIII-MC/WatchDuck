@@ -2,10 +2,10 @@ package com.xiii.watchduck.check.checks.speed;
 
 import com.xiii.watchduck.check.Category;
 import com.xiii.watchduck.check.CheckInfo;
-import com.xiii.watchduck.exempt.Exempt;
 import com.xiii.watchduck.exempt.ExemptType;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import com.xiii.watchduck.check.Check;
+import org.bukkit.potion.PotionEffectType;
 
 @CheckInfo(name = "Speed A", category = Category.MOVEMENT)
 public class SpeedA extends Check {
@@ -18,17 +18,17 @@ public class SpeedA extends Check {
 
         boolean exempt = isExempt(ExemptType.FLYING, ExemptType.TELEPORT);
 
+        if(data.lastice < 2200) {
+            if(groundTicks > 22) maxSpeed = 0.3;
+            if(groundTicks < 22) maxSpeed = 1;
+        }
+
         if(data.playerGround) groundTicks++;
         if(!data.playerGround) groundTicks = 0;
         cSpeed = data.getDistance(true);
 
         if(groundTicks > 22) maxSpeed = 0.29;
         if(groundTicks < 22) maxSpeed = 0.338;
-
-        if(data.onIce) {
-            if(groundTicks > 22) maxSpeed = 0.3;
-            if(groundTicks < 22) maxSpeed = 1;
-        }
 
         if(isExempt(ExemptType.SLIME)) {
             if(groundTicks > 22) maxSpeed = 0.12;
@@ -42,11 +42,10 @@ public class SpeedA extends Check {
         }
 
         if(isExempt(ExemptType.VELOCITY)) {
-            maxSpeed = 0.8;
+            maxSpeed = 1;
             if(data.kblevel >= 1) maxSpeed = (data.kblevel * 0.95);
         }
-
-        if(cSpeed > maxSpeed && !exempt) fail("Moved too fast", "cs=" + cSpeed + "ms=" + maxSpeed);
+        if(cSpeed > maxSpeed + (data.player.hasPotionEffect(PotionEffectType.SPEED) ? ((data.player.getPotionEffect(PotionEffectType.SPEED).getAmplifier() * 0.1)) : 0) && !exempt) fail("Moved too fast", "cs=" + cSpeed + "ms=" + maxSpeed);
         if(cSpeed <= maxSpeed) removeBuffer();
     }
 }
