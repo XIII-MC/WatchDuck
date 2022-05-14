@@ -10,13 +10,11 @@ import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 public class InvalidA extends Check {
 
     double maxSpeed;
-    double cSpeed;
 
     public void onMove(PacketPlayReceiveEvent packet, double motionX, double motionY, double motionZ, double lastmotionX, double lastmotionY, double lastmotionZ, float deltaYaw, float deltaPitch, float lastdeltaYaw, float lastdeltaPitch) {
-        boolean exempt = isExempt(ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.FLYING);
-        cSpeed = data.getDistance(true);
+        boolean exempt = isExempt(ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.FLYING, ExemptType.INSIDE_VEHICLE);
         maxSpeed = 0.68;
-        if(isExempt(ExemptType.VELOCITY)) maxSpeed += 0.32;
-        if(cSpeed > maxSpeed && !exempt) fail("Moved too fast", "mS=" + maxSpeed + " cS=" + cSpeed);
+        if(isExempt(ExemptType.VELOCITY)) maxSpeed += 0.52;
+        if(data.getDistance(true) > maxSpeed && !exempt) fail("Moved too fast", "mS=" + maxSpeed + " cS=" + data.getDistance(true));
     }
 }
