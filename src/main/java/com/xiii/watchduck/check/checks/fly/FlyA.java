@@ -12,8 +12,8 @@ public class FlyA extends Check {
     public void onMove(PacketPlayReceiveEvent packet, double motionX, double motionY, double motionZ, double lastmotionX, double lastmotionY, double lastmotionZ, float deltaYaw, float deltaPitch, float lastdeltaYaw, float lastdeltaPitch) {
         boolean exempt = isExempt(ExemptType.FLYING, ExemptType.SLIME, ExemptType.TELEPORT, ExemptType.JOINED, ExemptType.INSIDE_VEHICLE, ExemptType.NEAR_VEHICLE, ExemptType.CLIMBABLE);
         if(data.inAir && !exempt) {
-            if (Math.abs(data.motionY - data.predymotion) > 0.001) fail("Prediction Unfollowed", "my=" + motionY + " pred=" + data.predymotion);
-            if (Math.abs(data.motionY - data.predymotion) < 0.001) removeBuffer();
+            if (Math.abs(data.motionY - data.predymotion) > 0.008) fail("Prediction Unfollowed", "my=" + motionY + " pred=" + data.predymotion);
+            if (Math.abs(data.motionY - data.predymotion) < 0.008) buffer = 0;
         }
     }
 }
