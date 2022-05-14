@@ -7,12 +7,12 @@ import java.util.function.Function;
 
 @Getter
 public enum ExemptType {
-    TELEPORT(data -> data.isTeleporting || System.currentTimeMillis() - data.joined < 2000L),
+    TELEPORT(data -> data.isTeleporting || System.currentTimeMillis() - data.joined < 1200L),
     AIR(data -> data.inAir),
     GROUND(data -> data.onSolidGround && data.to.getY() % 0.015625 == 0.0),
     PACKET_GROUND(data -> data.playerGround),
     TPS(data -> data.getTPS() > 18.5D),
-    JOINED(data -> System.currentTimeMillis() - data.joined < 5000L),
+    JOINED(data -> System.currentTimeMillis() - data.joined < 500L),
     TRAPDOOR(data -> data.nearTrapdoor),
     CHUNK(data -> !data.getPlayer().getWorld().isChunkLoaded(data.getPlayer().getLocation().getBlockX() << 4, data.getPlayer().getLocation().getBlockZ() << 4)),
     STEPPED(data -> data.playerGround && data.motionY > 0),

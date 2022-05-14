@@ -15,6 +15,7 @@ import com.xiii.watchduck.check.checks.badpacket.BadPacketA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
 import com.xiii.watchduck.check.checks.scaffold.TowerA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
+import com.xiii.watchduck.check.checks.vclip.vClipB;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
 import io.github.retrooper.packetevents.PacketEvents;
@@ -142,6 +143,7 @@ public class PlayerData {
         registerCheck(new BadPacketD());
         registerCheck(new JumpA());
         registerCheck(new vClipA());
+        registerCheck(new vClipB());
         registerCheck(new FlyA());
         registerCheck(new FlyB());
         registerCheck(new FlyC());
@@ -460,7 +462,6 @@ public class PlayerData {
                 lastnearboat = System.currentTimeMillis();
             }
         }
-        /** Not supported in 1.8.8 **/
         //
         //if(player != null) {
         //    if(player.isGliding()) {
