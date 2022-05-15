@@ -30,6 +30,8 @@ import org.bukkit.entity.Boat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 import com.xiii.watchduck.WatchDuck;
 import com.xiii.watchduck.check.Check;
@@ -284,7 +286,7 @@ public class PlayerData {
                 ban(name, check.bannable, check.kickable ,check.name
                         , WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + ".Messages.broadcastPunish"));
             }
-            Bukkit.getScheduler().runTask(WatchDuck.instance, () -> { player.teleport(lagback); });
+            //Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> { player.teleport(lagback); });
         }
     }
 
@@ -317,6 +319,15 @@ public class PlayerData {
             }
         }
         resetFlags(name);
+    }
+
+    public int getPotionEffectAmplifier(PotionEffectType type) {
+        for(PotionEffect effect : player.getActivePotionEffects()) {
+            if(effect.getType() == type) {
+                return (effect.getAmplifier() + 1);
+            }
+        }
+        return 0;
     }
 
     public void setGetBlocksaround() {

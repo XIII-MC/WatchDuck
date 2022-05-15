@@ -202,7 +202,7 @@ public class PacketListener extends PacketListenerAbstract {
 
     private void handleBlocks(PlayerData data) {
         blocks.clear();
-        BoundingBox boundingBox = new BoundingBox(data.getPlayer())
+        final BoundingBox boundingBox = new BoundingBox(data.getPlayer())
                 .expandSpecific(0, 0, 0.55, 0.6, 0, 0);
 
         final double minX = boundingBox.getMinX();
@@ -211,17 +211,18 @@ public class PacketListener extends PacketListenerAbstract {
         final double maxX = boundingBox.getMaxX();
         final double maxY = boundingBox.getMaxY();
         final double maxZ = boundingBox.getMaxZ();
-
+        List<Block> b = new ArrayList<>();
         for (double x = minX; x <= maxX; x += (maxX - minX)) {
             for (double y = minY; y <= maxY + 0.01; y += (maxY - minY) / 5) { //Expand max by 0.01 to compensate shortly for precision issues due to FP.
                 for (double z = minZ; z <= maxZ; z += (maxZ - minZ)) {
                     final Location location = new Location(data.getPlayer().getWorld(), x, y, z);
                     final Block block = this.getBlock(location);
                     blocks.add(block);
+                    b.add(block);
                 }
             }
         }
-        List<Block> b = blocks;
+//XIII___ lost connection: Internal Exception: java.lang.NoSuchMethodError: org.bukkit.entity.Player.getPotionEffect(Lorg/bukkit/potion/PotionEffectType;)Lorg/bukkit/potion/PotionEffect;
         data.isInLiquid = b.stream().anyMatch(Block::isLiquid);
         data.inweb = b.stream().anyMatch(block -> block.getType().toString().contains("WEB"));
         data.inAir = b.stream().allMatch(block -> block.getType() == Material.AIR);
@@ -229,7 +230,6 @@ public class PacketListener extends PacketListenerAbstract {
         data.onSolidGround = b.stream().anyMatch(block -> block.getType().isSolid());
         data.isonSlab = b.stream().anyMatch(block -> block.getType().toString().contains("STEP") || block.getType().toString().contains("SLAB"));
         data.isonStair = b.stream().anyMatch(block -> block.getType().toString().contains("STAIR"));
-        data.onLowBlock = b.stream().anyMatch(block -> block.getType().toString().contains("STAIR")) || b.stream().anyMatch(block -> block.getType().toString().contains("SLAB")) || b.stream().anyMatch(block -> block.getType().toString().contains("BREWING")) || b.stream().anyMatch(block -> block.getType().toString().contains("CARPET")) || b.stream().anyMatch(block -> block.getType().toString().contains("SNOW")) || b.stream().anyMatch(block -> block.getType().toString().contains("POT")) || b.stream().anyMatch(block -> block.getType().toString().contains("TRAPDOOR")) | b.stream().anyMatch(block -> block.getType().toString().contains("BED")) || b.stream().anyMatch(block -> block.getType().toString().contains("SNOW"));
         data.nearTrapdoor = this.isCollidingAtLocation(data,1.801, material -> material.toString().contains("TRAP_DOOR"));
         data.blockabove = b.stream().filter(block -> block.getLocation().getY() - data.to.getY() > 1.5)
                 .anyMatch(block -> block.getType() != Material.AIR) || data.nearTrapdoor;
