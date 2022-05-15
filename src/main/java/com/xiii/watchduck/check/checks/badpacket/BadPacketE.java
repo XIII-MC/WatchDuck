@@ -9,9 +9,9 @@ import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 public class BadPacketE extends Check {
 
     public void onPacket(PacketPlayReceiveEvent packet) {
-        if (data.eatDelay < 1400) {
+        if (data.eatDelay < 1300) {
             fail("Ate too fast", "delay=" + data.eatDelay);
-            data.eatDelay = 1400;
+            data.eatDelay = 1300;
         }
     }
 }
