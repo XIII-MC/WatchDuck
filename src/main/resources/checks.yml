@@ -82,6 +82,48 @@ BadPacket E:
   Messages:
     broadcastPunish: true
 
+BadPacket F:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 5
+    removeBuffer: 0.1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
+BadPacket G:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+BadPacket H:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 8
+    removeBuffer: 1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
+
 KillAura A:
   silent: false
   enabled: true
@@ -271,20 +313,6 @@ Crasher C:
     addBuffer: 0
     maxBuffer: 0
     removeBuffer: 0
-  Punishments:
-    kick: true
-    ban: false
-    punishVL: 12
-  Messages:
-    broadcastPunish: true
-
-BadPacket F:
-  silent: false
-  enabled: true
-  Buffer:
-    addBuffer: 1
-    maxBuffer: 5
-    removeBuffer: 0.1
   Punishments:
     kick: true
     ban: false
