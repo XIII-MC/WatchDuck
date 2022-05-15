@@ -45,7 +45,7 @@ public class SpeedA extends Check {
             maxSpeed = 1;
             if(data.kblevel >= 1) maxSpeed = (data.kblevel * 0.95);
         }
-        if(cSpeed > maxSpeed + (data.player.hasPotionEffect(PotionEffectType.SPEED) ? ((data.player.getPotionEffect(PotionEffectType.SPEED).getAmplifier() * 0.1)) : 0) && !exempt) fail("Moved too fast", "cs=" + cSpeed + "ms=" + maxSpeed);
+        if(cSpeed > maxSpeed + (data.player.hasPotionEffect(PotionEffectType.SPEED) ? ((data.getPotionEffectAmplifier(PotionEffectType.SPEED) * 0.2) + 1) : 0) && !exempt) fail("Moved too fast", "cs=" + cSpeed + "ms=" + maxSpeed);
         if(cSpeed <= maxSpeed) removeBuffer();
     }
 }
