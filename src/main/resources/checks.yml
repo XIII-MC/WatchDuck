@@ -68,6 +68,20 @@ BadPacket D:
   Messages:
     broadcastPunish: true
 
+BadPacket E:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
 KillAura A:
   silent: false
   enabled: true
@@ -219,5 +233,47 @@ Tower A:
     kick: true
     ban: false
     punishVL: 6
+  Messages:
+    broadcastPunish: true
+
+Crasher A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: false
+    ban: true
+    punishVL: 1
+  Messages:
+    broadcastPunish: true
+
+Crasher B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 1
+  Messages:
+    broadcastPunish: true
+
+Crasher C:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
   Messages:
     broadcastPunish: true
