@@ -18,6 +18,6 @@ public class FlyB extends Check {
         if(motionY > 0.05 && !exempt) airTicks++;
         if(isExempt(ExemptType.VELOCITY)) airLimit += 5;
         if(airTicks > airLimit && !exempt) fail("Added Airticks", "ticks=" + airTicks);
-        if(motionY <= 0.05 && data.onSolidGround || data.ground2() || data.isOnGround()) airTicks = 0;
+        if(motionY <= 0.05 && data.onSolidGround || data.ground2() || data.isOnGround() || data.playerGround) airTicks = 0;
     }
 }
