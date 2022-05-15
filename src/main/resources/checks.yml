@@ -277,3 +277,17 @@ Crasher C:
     punishVL: 12
   Messages:
     broadcastPunish: true
+
+BadPacket F:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 5
+    removeBuffer: 0.1
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 12
+  Messages:
+    broadcastPunish: true
