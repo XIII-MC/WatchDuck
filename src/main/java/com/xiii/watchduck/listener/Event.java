@@ -16,9 +16,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import com.xiii.watchduck.WatchDuck;
 
 public class Event implements Listener {
@@ -67,7 +65,6 @@ public class Event implements Listener {
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
-            Data.data.registerUser(e.getPlayer());
             PlayerData data = Data.data.getUserData(e.getPlayer());
             data.lastblockplace = System.currentTimeMillis();
             data.blockplaced = e.getBlock();
@@ -95,6 +92,24 @@ public class Event implements Listener {
                     data.lasthurtother = System.currentTimeMillis();
             }
 
+        });
+    }
+
+    @EventHandler
+    public void onInteract(PlayerInteractEvent e) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
+            PlayerData data = Data.data.getUserData(e.getPlayer());
+            data.lastUse = System.currentTimeMillis();
+        });
+    }
+
+    @EventHandler
+    public void onConsume(PlayerItemConsumeEvent e) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
+            PlayerData data = Data.data.getUserData(e.getPlayer());
+            data.eatDelay = System.currentTimeMillis() - data.lastUse;
+            if(data.eatDelay < 1400) e.setCancelled(true);
+            data.lastEat = System.currentTimeMillis();
         });
     }
 

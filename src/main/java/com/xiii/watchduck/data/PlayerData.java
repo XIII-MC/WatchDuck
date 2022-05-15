@@ -1,9 +1,10 @@
 package com.xiii.watchduck.data;
 
 import com.xiii.watchduck.check.CheckInfo;
-import com.xiii.watchduck.check.checks.badpacket.BadPacketB;
-import com.xiii.watchduck.check.checks.badpacket.BadPacketC;
-import com.xiii.watchduck.check.checks.badpacket.BadPacketD;
+import com.xiii.watchduck.check.checks.badpacket.*;
+import com.xiii.watchduck.check.checks.crasher.CrasherA;
+import com.xiii.watchduck.check.checks.crasher.CrasherB;
+import com.xiii.watchduck.check.checks.crasher.CrasherC;
 import com.xiii.watchduck.check.checks.fly.FlyA;
 import com.xiii.watchduck.check.checks.fly.FlyB;
 import com.xiii.watchduck.check.checks.fly.FlyC;
@@ -11,7 +12,6 @@ import com.xiii.watchduck.check.checks.invalid.InvalidA;
 import com.xiii.watchduck.check.checks.jump.JumpA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraB;
-import com.xiii.watchduck.check.checks.badpacket.BadPacketA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
 import com.xiii.watchduck.check.checks.scaffold.TowerA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
@@ -40,6 +40,8 @@ import com.xiii.watchduck.utils.SampleList;
 
 import java.util.*;
 
+import static org.yaml.snakeyaml.tokens.Token.ID.Value;
+
 public class PlayerData {
 
     public ArrayList<Check> checks = new ArrayList<>();
@@ -48,6 +50,11 @@ public class PlayerData {
     public Player player;
     public String name;
     public boolean alertstoggled;
+    public double lastEat;
+    public double eatDelay;
+    public double lastWindow;
+    public double lastEntityUse;
+    public double lastUse;
     public long lastTeleport;
     public long weirdTeleport;
     public Location from;
@@ -139,8 +146,12 @@ public class PlayerData {
         registerCheck(new BadPacketA());
         registerCheck(new BadPacketB());
         registerCheck(new BadPacketC());
-        registerCheck(new InvalidA());
         registerCheck(new BadPacketD());
+        registerCheck(new BadPacketE());
+        registerCheck(new BadPacketF());
+        registerCheck(new BadPacketG());
+        registerCheck(new BadPacketH());
+        registerCheck(new InvalidA());
         registerCheck(new JumpA());
         registerCheck(new vClipA());
         registerCheck(new vClipB());
@@ -148,6 +159,9 @@ public class PlayerData {
         registerCheck(new FlyB());
         registerCheck(new FlyC());
         registerCheck(new TowerA());
+        registerCheck(new CrasherA());
+        registerCheck(new CrasherB());
+        registerCheck(new CrasherC());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
@@ -251,7 +265,6 @@ public class PlayerData {
                 }
                 buf += obj.toString() + ", ";
             }
-            player.teleport(lagback);
             final String text = "§fCheck §8» §b" + check.name + " \n§fInformation §8» §b" + Info + " \n§fValue: §8» §b" + Value + " \n§fBuffer §8» §b" + Buffer + "§8/§b" + maxBuffer;
             for (Player p : Bukkit.getOnlinePlayers()) {
                 boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode");
@@ -271,6 +284,7 @@ public class PlayerData {
                 ban(name, check.bannable, check.kickable ,check.name
                         , WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + ".Messages.broadcastPunish"));
             }
+            Bukkit.getScheduler().runTask(WatchDuck.instance, () -> { player.teleport(lagback); });
         }
     }
 
@@ -286,7 +300,7 @@ public class PlayerData {
             if(ban) {
                 //Bukkit.getBanList(BanList.Type.NAME).addBan(player.getName(), WatchDuck.instance.configUtils.getConvertedStringFromConfig("checks", player, ".Messages.broadcastMessage"), );
                 Bukkit.getScheduler().runTask(WatchDuck.instance, () -> {
-                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban " + player.getName() + "2");
+                    Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "ban " + player.getName() + "1");
                 });
             } else {
                 if(kick) {
@@ -437,6 +451,7 @@ public class PlayerData {
             from = to;
         }
         if(playerGround) lagback = player.getLocation();
+        eatDelay = 1400;
         if(player.isFlying() || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) lastflyingtime = System.currentTimeMillis();
         test = System.currentTimeMillis();
         lastmotionX = motionX;
@@ -452,7 +467,6 @@ public class PlayerData {
         mx.add(motionX);
         my.add(motionY);
         mz.add(motionZ);
-        onLowBlock = BlockUtils.isOnLowBlock(player);
         nearboat = false;
         predymotion = (lastmotionY - 0.08) * 0.9800000190734863;
         for (Entity e : getEntitiesAroundPoint(1.7)) {
@@ -493,32 +507,38 @@ public class PlayerData {
     }
 
     public List<Entity> getEntitiesAroundPoint(double radius) {
-        List<Entity> entities = new ArrayList<Entity>();
-        World world = to.getWorld();
-        for (int x = (int) Math.floor((to.getX() - radius) / 16.0D); x <= Math.floor((to.getX() + radius) / 16.0D); x++) {
-            for (int z = (int) Math.floor((to.getZ() - radius) / 16.0D); z <= Math.floor((to.getZ() + radius) / 16.0D); z++) {
-                if (world.isChunkLoaded(x, z)) {
-                    entities.addAll(Arrays.asList(world.getChunkAt(x, z).getEntities()));
+        try {
+            List<Entity> entities = new ArrayList<Entity>();
+            World world = to.getWorld();
+            for (int x = (int) Math.floor((to.getX() - radius) / 16.0D); x <= Math.floor((to.getX() + radius) / 16.0D); x++) {
+                for (int z = (int) Math.floor((to.getZ() - radius) / 16.0D); z <= Math.floor((to.getZ() + radius) / 16.0D); z++) {
+                    if (world.isChunkLoaded(x, z)) {
+                        entities.addAll(Arrays.asList(world.getChunkAt(x, z).getEntities()));
+                    }
                 }
             }
-        }
-        Iterator<Entity> entityIterator = entities.iterator();
-        while (entityIterator.hasNext()) {
-            if (entityIterator.next().getLocation().distanceSquared(to) > radius * radius) {
-                entityIterator.remove(); // Remove it
+            Iterator<Entity> entityIterator = entities.iterator();
+            while (entityIterator.hasNext()) {
+                if (entityIterator.next().getLocation().distanceSquared(to) > radius * radius) {
+                    entityIterator.remove(); // Remove it
+                }
             }
+            return entities;
+        } catch (NullPointerException e) {
+
         }
-        return entities;
+        return null;
     }
 
-    public double getgcd(double a, double b) {
+
+    public double getGCD(double a, double b) {
         if(a < b) {
-            return getgcd(b, a);
+            return getGCD(b, a);
         }
         if(Math.abs(b) < 0.001) {
             return a;
         } else {
-            return getgcd(b, a - Math.floor(a / b) * b);
+            return getGCD(b, a - Math.floor(a / b) * b);
         }
     }
 
@@ -544,10 +564,10 @@ public class PlayerData {
     }
 
     public double getGCDPitch() {
-        return getgcd(Math.abs(deltaPitch), Math.abs(lastdeltaPitch));
+        return getGCD(Math.abs(deltaPitch), Math.abs(lastdeltaPitch));
     }
     public double getGCDYaw() {
-        return getgcd(Math.abs(deltaYaw), Math.abs(lastdeltaYaw));
+        return getGCD(Math.abs(deltaYaw), Math.abs(lastdeltaYaw));
     }
 
     public float[] getRotations(Location one, Location two) {

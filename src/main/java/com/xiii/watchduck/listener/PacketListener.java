@@ -229,6 +229,7 @@ public class PacketListener extends PacketListenerAbstract {
         data.onSolidGround = b.stream().anyMatch(block -> block.getType().isSolid());
         data.isonSlab = b.stream().anyMatch(block -> block.getType().toString().contains("STEP") || block.getType().toString().contains("SLAB"));
         data.isonStair = b.stream().anyMatch(block -> block.getType().toString().contains("STAIR"));
+        data.onLowBlock = b.stream().anyMatch(block -> block.getType().toString().contains("STAIR")) || b.stream().anyMatch(block -> block.getType().toString().contains("SLAB")) || b.stream().anyMatch(block -> block.getType().toString().contains("BREWING")) || b.stream().anyMatch(block -> block.getType().toString().contains("CARPET")) || b.stream().anyMatch(block -> block.getType().toString().contains("SNOW")) || b.stream().anyMatch(block -> block.getType().toString().contains("POT")) || b.stream().anyMatch(block -> block.getType().toString().contains("TRAPDOOR")) | b.stream().anyMatch(block -> block.getType().toString().contains("BED")) || b.stream().anyMatch(block -> block.getType().toString().contains("SNOW"));
         data.nearTrapdoor = this.isCollidingAtLocation(data,1.801, material -> material.toString().contains("TRAP_DOOR"));
         data.blockabove = b.stream().filter(block -> block.getLocation().getY() - data.to.getY() > 1.5)
                 .anyMatch(block -> block.getType() != Material.AIR) || data.nearTrapdoor;

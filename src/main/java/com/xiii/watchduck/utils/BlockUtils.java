@@ -13,33 +13,6 @@ public class BlockUtils {
     public static ArrayList<Block> getBlocksaround = new ArrayList<>();
     public static ArrayList<String> getMaterialsaround = new ArrayList<>();
 
-    public static boolean isOnLowBlock(Player player) {
-        if(player != null) {
-            PlayerData data = Data.data.getUserData(player);
-            setGetBlocksaround(player);
-            if(data != null) {
-                if(getBlocksaround.stream().parallel().allMatch(material4 -> !material4.toString().contains("AIR") && !material4.toString().contains("WATER") && !material4.toString().contains("LAVA") && !material4.toString().contains("FIRE"))) {
-                    return true;
-                }
-                ArrayList<Block> blocks = new ArrayList<>();
-                ArrayList<Block> blocks2 = new ArrayList<>();
-                for(Block b : getBlocksaround) {
-                    blocks.add(b.getLocation().clone().add(0, -0.5001, 0).getBlock());
-                    blocks2.add(b.getLocation().clone().add(0, -0.1, 0).getBlock());
-                }
-                if(blocks.stream().parallel().anyMatch(material2 -> material2.toString().contains("CARPET") || material2.toString().contains("SOUL") || material2.toString().contains("SNOW") || material2.toString().contains("BREWING") || material2.toString().contains("SLABS") || material2.toString().contains("STAIRS") || material2.toString().contains("CAKE") || material2.toString().contains("BED") || material2.toString().contains("FENCE") || material2.toString().contains("FLOWER") || material2.toString().contains("WEEPING") || material2.toString().contains("VINE") || material2.toString().contains("LADDER") || material2.toString().contains("LILY") || material2.toString().contains("CHEST") || material2.toString().contains("REDSTONE") || material2.toString().contains("CAULDRON") || material2.toString().contains("WALL") || material2.toString().contains("COMPOSTER"))) {
-                    return true;
-                }
-                if(blocks2.stream().parallel().anyMatch(material -> material.toString().contains("CARPET") || material.toString().contains("SOUL") || material.toString().contains("SNOW") || material.toString().contains("BREWING") || material.toString().contains("SLABS") || material.toString().contains("STAIRS") || material.toString().contains("CAKE") || material.toString().contains("BED") || material.toString().contains("FENCE") || material.toString().contains("FLOWER") || material.toString().contains("WEEPING") || material.toString().contains("VINE") || material.toString().contains("LADDER") || material.toString().contains("LILY") || material.toString().contains("CHEST") || material.toString().contains("REDSTONE") || material.toString().contains("CAULDRON") || material.toString().contains("WALL") || material.toString().contains("COMPOSTER"))) {
-                    return true;
-                }
-                if(getBlocksaround.stream().parallel().anyMatch(material4 -> material4.toString().contains("CARPET") || material4.toString().contains("SOUL") || material4.toString().contains("SNOW") || material4.toString().contains("BREWING") || material4.toString().contains("SLABS") || material4.toString().contains("STAIRS") || material4.toString().contains("CAKE") || material4.toString().contains("BED") || material4.toString().contains("FENCE") || material4.toString().contains("FLOWER") || material4.toString().contains("WEEPING") || material4.toString().contains("VINE") || material4.toString().contains("LADDER") || material4.toString().contains("LILY") || material4.toString().contains("CHEST") || material4.toString().contains("REDSTONE") || material4.toString().contains("CAULDRON") || material4.toString().contains("WALL") || material4.toString().contains("COMPOSTER") || material4.toString().contains("REPEATER"))) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public static boolean inLiquid(Player player) {
         if(player != null) {
