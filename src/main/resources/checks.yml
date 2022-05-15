@@ -114,9 +114,9 @@ BadPacket H:
   silent: false
   enabled: true
   Buffer:
-    addBuffer: 1
-    maxBuffer: 8
-    removeBuffer: 1
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
   Punishments:
     kick: true
     ban: false
