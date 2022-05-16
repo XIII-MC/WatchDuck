@@ -24,8 +24,11 @@ public class KillAuraC extends Check {
             }
             lastTarget = ue.getEntity();
             if(targetedEntities > 1) {
-                Bukkit.broadcastMessage("TargetCount: " + targetedEntities);
+               // Bukkit.broadcastMessage("TargetCount: " + targetedEntities);
             }
+        }
+        if(packet.getPacketId() == PacketType.Play.Client.POSITION || packet.getPacketId() == PacketType.Play.Client.POSITION_LOOK || packet.getPacketId() == PacketType.Play.Client.LOOK) {
+            targetedEntities = 0;
         }
     }
 }

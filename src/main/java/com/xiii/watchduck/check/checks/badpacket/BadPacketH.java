@@ -21,7 +21,7 @@ public class BadPacketH extends Check {
         double delay = lastUseEntityTime - lastWindowTime;
         if(packet.getPacketId() == PacketType.Play.Client.USE_ENTITY) {
             if(delay < 50) {
-                fail("Clicked Inventory", delay);
+                fail("Armor Breaker", delay);
             }
         }
 
