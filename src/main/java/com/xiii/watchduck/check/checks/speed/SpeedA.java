@@ -18,10 +18,7 @@ public class SpeedA extends Check {
 
         boolean exempt = isExempt(ExemptType.FLYING, ExemptType.TELEPORT);
 
-        if(data.lastice < 2200) {
-            if(groundTicks > 22) maxSpeed = 0.3;
-            if(groundTicks < 22) maxSpeed = 1;
-        }
+
 
         if(data.playerGround) groundTicks++;
         if(!data.playerGround) groundTicks = 0;
@@ -29,7 +26,10 @@ public class SpeedA extends Check {
 
         if(groundTicks > 22) maxSpeed = 0.29;
         if(groundTicks < 22) maxSpeed = 0.338;
-
+        if(System.currentTimeMillis() - data.lastice < 2200) {
+            if(groundTicks > 22) maxSpeed = 0.3;
+            if(groundTicks < 22) maxSpeed = 1;
+        }
         if(isExempt(ExemptType.SLIME)) {
             if(groundTicks > 22) maxSpeed = 0.12;
             if(groundTicks < 22) maxSpeed = 0.8;

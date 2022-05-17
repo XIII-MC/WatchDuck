@@ -235,6 +235,10 @@ public class PacketListener extends PacketListenerAbstract {
                 .anyMatch(block -> block.getType() != Material.AIR) || data.nearTrapdoor;
         data.onSlime = b.stream().anyMatch(block -> block.getType().toString().equalsIgnoreCase("SLIME_BLOCK"));
         data.nearPiston = b.stream().anyMatch(block -> block.getType().toString().contains("PISTON"));
+        data.onLowBlock = b.stream().anyMatch(block -> block.getType().toString().contains("TRAP_DOOR") || block.getType().toString().contains("BED") || block.getType().toString().contains("CARPET") || block.getType().toString().contains("REPEATER") || block.getType().toString().contains("COMPARATOR") || block.getType().toString().contains("SLAB") || block.getType().toString().contains("SNOW") || block.getType().toString().contains("CAULDRON") || block.getType().toString().contains("BREWING") || block.getType().toString().contains("HOPPER") || block.getType().toString().contains("DETECTOR") || block.getType().toString().contains("ENCHANTING") || block.getType().toString().contains("END_PORTAL") || block.getType().toString().contains("POT") || block.getType().toString().contains("SOUL_SAND"));
+        if(data.onIce) {
+            data.lastice = System.currentTimeMillis();
+        }
         final Location location = data.getPlayer().getLocation();
         final int var1 = NumberConversions.floor(location.getX());
         final int var2 = NumberConversions.floor(location.getY());
