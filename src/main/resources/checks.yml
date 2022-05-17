@@ -90,7 +90,7 @@ BadPacket F:
     maxBuffer: 5
     removeBuffer: 0.1
   Punishments:
-    kick: true
+    kick: false
     ban: false
     punishVL: 12
   Messages:

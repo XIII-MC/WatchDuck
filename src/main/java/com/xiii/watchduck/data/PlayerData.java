@@ -2,6 +2,7 @@ package com.xiii.watchduck.data;
 
 import com.xiii.watchduck.check.CheckInfo;
 import com.xiii.watchduck.check.checks.badpacket.*;
+import com.xiii.watchduck.check.checks.chat.ChatA;
 import com.xiii.watchduck.check.checks.crasher.CrasherA;
 import com.xiii.watchduck.check.checks.crasher.CrasherB;
 import com.xiii.watchduck.check.checks.crasher.CrasherC;
@@ -164,6 +165,7 @@ public class PlayerData {
         registerCheck(new CrasherA());
         registerCheck(new CrasherB());
         registerCheck(new CrasherC());
+        registerCheck(new ChatA());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());
