@@ -17,6 +17,8 @@ import com.xiii.watchduck.check.checks.jump.JumpA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraB;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
+import com.xiii.watchduck.check.checks.scaffold.ScaffoldA;
+import com.xiii.watchduck.check.checks.scaffold.ScaffoldB;
 import com.xiii.watchduck.check.checks.scaffold.TowerA;
 import com.xiii.watchduck.check.checks.speed.SpeedA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
@@ -164,6 +166,8 @@ public class PlayerData {
         registerCheck(new FlyB());
         registerCheck(new FlyC());
         registerCheck(new TowerA());
+        registerCheck(new ScaffoldA());
+        registerCheck(new ScaffoldB());
         registerCheck(new CrasherA());
         registerCheck(new CrasherB());
         registerCheck(new CrasherC());
