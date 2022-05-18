@@ -12,6 +12,35 @@ Speed A:
   Messages:
     broadcastPunish: true
 
+Chat A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: false
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+Chat B:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: false
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+
 BadPacket A:
   silent: false
   enabled: true

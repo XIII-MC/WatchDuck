@@ -3,6 +3,7 @@ package com.xiii.watchduck.data;
 import com.xiii.watchduck.check.CheckInfo;
 import com.xiii.watchduck.check.checks.badpacket.*;
 import com.xiii.watchduck.check.checks.chat.ChatA;
+import com.xiii.watchduck.check.checks.chat.ChatB;
 import com.xiii.watchduck.check.checks.crasher.CrasherA;
 import com.xiii.watchduck.check.checks.crasher.CrasherB;
 import com.xiii.watchduck.check.checks.crasher.CrasherC;
@@ -55,8 +56,8 @@ public class PlayerData {
     public boolean alertstoggled;
     public double lastEat;
     public double eatDelay;
-    public double lastWindow;
-    public double lastEntityUse;
+    public double lastShoot;
+    public double lastShootDelay;
     public double lastUse;
     public long lastTeleport;
     public long weirdTeleport;
@@ -166,6 +167,7 @@ public class PlayerData {
         registerCheck(new CrasherB());
         registerCheck(new CrasherC());
         registerCheck(new ChatA());
+        registerCheck(new ChatB());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());

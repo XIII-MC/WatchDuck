@@ -5,6 +5,7 @@ import com.xiii.watchduck.data.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.*;
 import com.xiii.watchduck.WatchDuck;
 
@@ -99,6 +101,22 @@ public class Event implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
             data.lastUse = System.currentTimeMillis();
+        });
+    }
+
+    @EventHandler
+    public void onShoot(ProjectileLaunchEvent e) {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
+            if (e.getEntity() instanceof Arrow) {
+                Arrow arrow = (Arrow) e.getEntity();
+                if (arrow.getShooter() != null && arrow.getShooter() instanceof Player) {
+                    Player player = (Player) arrow.getShooter();
+                    PlayerData data = Data.data.getUserData(player);
+                    data.lastShootDelay = System.currentTimeMillis() - data.lastUse;
+                    if(data.lastShootDelay < 300) e.setCancelled(true);
+                    data.lastShoot = System.currentTimeMillis();
+                }
+            }
         });
     }
 
