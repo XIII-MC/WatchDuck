@@ -55,7 +55,7 @@ public class Event implements Listener {
     }
 
     @EventHandler
-    public void respawn(PlayerRespawnEvent e) {
+    public void onRespawn(PlayerRespawnEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
             Data.data.registerUser(e.getPlayer());
             PlayerData data = Data.data.getUserData(e.getPlayer());
@@ -112,9 +112,9 @@ public class Event implements Listener {
                 if (arrow.getShooter() != null && arrow.getShooter() instanceof Player) {
                     Player player = (Player) arrow.getShooter();
                     PlayerData data = Data.data.getUserData(player);
-                    data.lastShootDelay = System.currentTimeMillis() - data.lastUse;
-                    if(data.lastShootDelay < 300) e.setCancelled(true);
-                    data.lastShoot = System.currentTimeMillis();
+                        data.lastShootDelay = System.currentTimeMillis() - data.lastUse;
+                        data.shootDelay = System.currentTimeMillis() - data.lastShoot;
+                        data.lastShoot = System.currentTimeMillis();
                 }
             }
         });
@@ -124,9 +124,9 @@ public class Event implements Listener {
     public void onConsume(PlayerItemConsumeEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
             PlayerData data = Data.data.getUserData(e.getPlayer());
-            data.eatDelay = System.currentTimeMillis() - data.lastUse;
-            if(data.eatDelay < 1400) e.setCancelled(true);
-            data.lastEat = System.currentTimeMillis();
+                data.eatDelay = System.currentTimeMillis() - data.lastUse;
+                if (data.eatDelay < 1400) e.setCancelled(true);
+                data.lastEat = System.currentTimeMillis();
         });
     }
 
@@ -163,7 +163,7 @@ public class Event implements Listener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void onbreak(BlockBreakEvent e) {
+    public void onBreak(BlockBreakEvent e) {
         Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> {
             Data.data.registerUser(e.getPlayer());
             PlayerData data = Data.data.getUserData(e.getPlayer());

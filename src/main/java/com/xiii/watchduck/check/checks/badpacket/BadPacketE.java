@@ -14,8 +14,12 @@ public class BadPacketE extends Check {
             data.eatDelay = 1300;
         }
         if(data.lastShootDelay < 99) {
-            fail("Shoot too fast", "delay=" + data.lastShootDelay);
+            fail("Shot too fast", "delay=" + data.lastShootDelay);
             data.lastShootDelay = 99;
+        }
+        if(data.shootDelay < 299) {
+            fail("Shot too fast", "delay=" + data.shootDelay);
+            data.shootDelay = 299;
         }
     }
 }

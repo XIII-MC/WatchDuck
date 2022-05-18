@@ -1,5 +1,7 @@
 package com.xiii.watchduck.data;
 
+import com.xiii.watchduck.WatchDuck;
+import com.xiii.watchduck.check.Check;
 import com.xiii.watchduck.check.CheckInfo;
 import com.xiii.watchduck.check.checks.badpacket.*;
 import com.xiii.watchduck.check.checks.chat.ChatA;
@@ -16,16 +18,23 @@ import com.xiii.watchduck.check.checks.killaura.KillAuraA;
 import com.xiii.watchduck.check.checks.killaura.KillAuraB;
 import com.xiii.watchduck.check.checks.killaura.KillAuraC;
 import com.xiii.watchduck.check.checks.scaffold.TowerA;
+import com.xiii.watchduck.check.checks.speed.SpeedA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
 import com.xiii.watchduck.check.checks.vclip.vClipB;
+import com.xiii.watchduck.exempt.Exempt;
 import com.xiii.watchduck.utils.BlockUtils;
 import com.xiii.watchduck.utils.BoundingBox;
+import com.xiii.watchduck.utils.PastLocation;
+import com.xiii.watchduck.utils.SampleList;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Boat;
@@ -35,16 +44,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
-import com.xiii.watchduck.WatchDuck;
-import com.xiii.watchduck.check.Check;
-import com.xiii.watchduck.check.checks.speed.SpeedA;
-import com.xiii.watchduck.exempt.Exempt;
-import com.xiii.watchduck.utils.PastLocation;
-import com.xiii.watchduck.utils.SampleList;
 
 import java.util.*;
-
-import static org.yaml.snakeyaml.tokens.Token.ID.Value;
 
 public class PlayerData {
 
@@ -55,8 +56,9 @@ public class PlayerData {
     public String name;
     public boolean alertstoggled;
     public double lastEat;
-    public double eatDelay;
-    public double lastShoot;
+    public double eatDelay = 1300;
+    public double lastShoot = 99;
+    public double shootDelay = 299;
     public double lastShootDelay;
     public double lastUse;
     public long lastTeleport;
@@ -101,7 +103,6 @@ public class PlayerData {
     public int join;
     public int cancel;
     public Block brokenblock;
-    public long lastelytraused;
     public long lastpiston;
     public boolean nearboat;
     public long lastnearboat;
@@ -143,8 +144,6 @@ public class PlayerData {
         this.name = name;
         player = Bukkit.getPlayer(uuid);
         lasthurt = System.currentTimeMillis();
-        lastEat = 1300;
-        lastShootDelay = 100;
         registerCheck(new SpeedA());
         registerCheck(new KillAuraA());
         registerCheck(new KillAuraB());
@@ -467,7 +466,7 @@ public class PlayerData {
         if(from == null) {
             from = to;
         }
-        if(playerGround) lagback = player.getLocation();
+        if(isOnGround()) lagback = player.getLocation();
         eatDelay = 1400;
         if(player.isFlying() || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) lastflyingtime = System.currentTimeMillis();
         test = System.currentTimeMillis();
