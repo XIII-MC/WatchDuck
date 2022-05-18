@@ -13,9 +13,9 @@ public class BadPacketD extends Check {
 
     public void onPacket(PacketPlayReceiveEvent packet) {
         if(packet.getPacketId() == PacketType.Play.Client.BLOCK_PLACE) {
-            if(lastUse - System.currentTimeMillis() > -70 && lastUse - System.currentTimeMillis() < -1) fail("Packet Spam", "delay=" + (lastUse - System.currentTimeMillis()));
+            if(lastUse - System.currentTimeMillis() > -50 && lastUse - System.currentTimeMillis() < -1) fail("Packet Spam", "delay=" + (lastUse - System.currentTimeMillis()));
             if(buffer > maxBuffer) packet.setCancelled(true);
-            if(lastUse - System.currentTimeMillis() < -70) removeBuffer();
+            if(lastUse - System.currentTimeMillis() < -50) removeBuffer();
             lastUse = System.currentTimeMillis();
         }
     }
