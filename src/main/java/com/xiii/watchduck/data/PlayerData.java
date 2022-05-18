@@ -143,6 +143,8 @@ public class PlayerData {
         this.name = name;
         player = Bukkit.getPlayer(uuid);
         lasthurt = System.currentTimeMillis();
+        lastEat = 1300;
+        lastShootDelay = 100;
         registerCheck(new SpeedA());
         registerCheck(new KillAuraA());
         registerCheck(new KillAuraB());
