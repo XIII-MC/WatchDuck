@@ -18,8 +18,8 @@ public class TowerA extends Check {
         if (packet.getPacketId() == PacketType.Play.Client.BLOCK_PLACE) {
             if (data.motionY > 0.2) {
                 bCount++;
-                if(bCount > 4 && !exempt) fail("Placed too many blocks", "bCount=" + bCount);
-                if(bCount > 4 && !exempt) packet.setCancelled(true);
+                if(bCount > 6 && !exempt) fail("Placed too many blocks", "bCount=" + bCount);
+                if(bCount > 6 && !exempt) packet.setCancelled(true);
             } else bCount = 0;
 
         }
