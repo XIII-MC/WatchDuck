@@ -1,9 +1,12 @@
 package com.xiii.watchduck;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
 import com.xiii.watchduck.data.Data;
 import com.xiii.watchduck.listener.Event;
 import com.xiii.watchduck.listener.PacketListener;
 import com.xiii.watchduck.command.Command;
+import com.xiii.watchduck.runnable.WebhookRunnable;
 import com.xiii.watchduck.utils.ConfigUtils;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.settings.PacketEventsSettings;
@@ -12,11 +15,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
+
 public class WatchDuck extends JavaPlugin {
 
     public static WatchDuck instance;
     public PacketListener listener;
     public ConfigUtils configUtils;
+    public WebhookClient client;
+    public ArrayList<String> alertsToSend = new ArrayList<>();
 
     @Override
     public void onLoad() {
@@ -46,7 +53,29 @@ public class WatchDuck extends JavaPlugin {
         for(Player p : Bukkit.getOnlinePlayers()) {
             PacketEvents.get().getInjector().injectPlayer(p);
         }
+        WebhookRunnable runnable = new WebhookRunnable();
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, runnable, 100, 100);
+        if(configUtils.getBooleanFromConfig("config", "sendAlertsToDiscord", false)) {
+            discordthing();
+        }
     }
+
+    public void discordthing() {
+        if(configUtils.getStringFromConfig("config", "discordWebhookurl", "").equals("")) {
+            Bukkit.getConsoleSender().sendMessage("§8[§b§lWATCHDUCK§8] §cPlease add the Webhook URL to the Config and reload§f!");
+            return;
+        }
+        WebhookClientBuilder builder = new WebhookClientBuilder(configUtils.getStringFromConfig("config", "discordWebhookurl", ""));
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("Webhook-Thread");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        this.client = builder.build();
+    }
+
 
     @Override
     public void onDisable() {

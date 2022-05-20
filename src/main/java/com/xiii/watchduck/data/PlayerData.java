@@ -24,10 +24,7 @@ import com.xiii.watchduck.check.checks.speed.SpeedA;
 import com.xiii.watchduck.check.checks.vclip.vClipA;
 import com.xiii.watchduck.check.checks.vclip.vClipB;
 import com.xiii.watchduck.exempt.Exempt;
-import com.xiii.watchduck.utils.BlockUtils;
-import com.xiii.watchduck.utils.BoundingBox;
-import com.xiii.watchduck.utils.PastLocation;
-import com.xiii.watchduck.utils.SampleList;
+import com.xiii.watchduck.utils.*;
 import io.github.retrooper.packetevents.PacketEvents;
 import io.github.retrooper.packetevents.packetwrappers.play.in.useentity.WrappedPacketInUseEntity;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -202,17 +199,17 @@ public class PlayerData {
 
         check.name = info.name();
         check.category = info.category();
-        check.enabled = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".enabled");// config
-        check.kickable = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".Punishments.kick"); // config
-        check.bannable = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".Punishments.ban");// config
-        if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "silentchecks")) {// config decides
-            check.silent = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".silent");
+        check.enabled = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".enabled", true);// config
+        check.kickable = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".Punishments.kick", true); // config
+        check.bannable = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".Punishments.ban", false);// config
+        if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "silentchecks", false)) {// config decides
+            check.silent = WatchDuck.instance.configUtils.getBooleanFromConfig("checks", info.name() + ".silent", false);
         } else {
             check.silent = false;
         }
-        check.maxBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.maxBuffer");// config
-        check.addBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.addBuffer");; // config
-        check.removeBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.removeBuffer");; // config
+        check.maxBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.maxBuffer", 0);// config
+        check.addBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.addBuffer", 0); // config
+        check.removeBuffer = WatchDuck.instance.configUtils.getDoubleFromConfig("checks", info.name() + ".Buffer.removeBuffer",0);; // config
         if(!checks.contains(check))
             checks.add(check);
     }
@@ -277,8 +274,14 @@ public class PlayerData {
                 buf += obj.toString() + ", ";
             }
             final String text = "§fCheck §8» §b" + check.name + " \n§fInformation §8» §b" + Info + " \n§fValue: §8» §b" + Value + " \n§fBuffer §8» §b" + Buffer + "§8/§b" + maxBuffer;
+            List<String> array = WatchDuck.instance.configUtils.getConfig("config").getStringList("sendAlertToDiscordFromChecks");
+            for(String b : array) {
+                if(check.name.equalsIgnoreCase(b)) {
+                    WatchDuck.instance.alertsToSend.add(check.name + " - " + player.getName());
+                }
+            }
             for (Player p : Bukkit.getOnlinePlayers()) {
-                boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode");
+                boolean d = WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode", false);
                 PlayerData data = Data.data.getUserData(p);
                 if ((data.alertstoggled && !d) || (d && !p.getName().equals(player.getName()))) {
                     TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
@@ -286,21 +289,21 @@ public class PlayerData {
                     p.spigot().sendMessage(Flag);
                 }
             }
-            if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode")) {
+            if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode", false)) {
                 TextComponent Flag = new TextComponent("§b§lWatchDuck §8»§f " + name + " §7failed §f" + check.name + " §7(§bx" + getFlags(name, check.name) + "§7)");
                 Flag.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(text).create()));
                 player.spigot().sendMessage(Flag);
             }
             if (getFlags(name, check.name) > treshold) {
                 ban(name, check.bannable, check.kickable ,check.name
-                        , WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + ".Messages.broadcastPunish"));
+                        , WatchDuck.instance.configUtils.getBooleanFromConfig("checks", check.name + ".Messages.broadcastPunish", false));
             }
             //Bukkit.getScheduler().scheduleSyncDelayedTask(WatchDuck.instance, () -> { player.teleport(lagback); });
         }
     }
 
     public void ban(String r, boolean ban, boolean kick, String punishMessage, boolean broadcast) {
-        if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode")) {
+        if(WatchDuck.instance.configUtils.getBooleanFromConfig("config", "testMode", false)) {
             player.sendTitle("§cYou would be kicked by now.", "§b§lWatchDuck §8»§f " + punishMessage);
         } else {
             if(broadcast && ban || kick) {
@@ -472,7 +475,8 @@ public class PlayerData {
         }
         if(isOnGround()) lagback = player.getLocation();
         eatDelay = 1400;
-        if(player.isFlying() || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) lastflyingtime = System.currentTimeMillis();
+        if(player != null)
+            if(player.isFlying() || player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) lastflyingtime = System.currentTimeMillis();
         test = System.currentTimeMillis();
         lastmotionX = motionX;
         lastmotionY = motionY;

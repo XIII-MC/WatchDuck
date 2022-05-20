@@ -3,3 +3,6 @@ silentChecks: false
 broadcastPunish: true
 broadcastMessage: "§b§lWatchDuck §8»§f §c%player%§f has been removed for §cUnfair Advantage§f."
 testMode: true
+sendAlertsToDiscord: true
+discordWebhookurl: "https://discordapp.com/api/webhooks/977181668131622952/oh37AtcwJakYP7nBbf4WLF8vQu4neHQuE8L69DMaFmgZh1JYYE7Q0QGztD8qBwEyw-K0"
+sendAlertToDiscordFromChecks: ["BadPacketA", "Crasher A", "Crasher B", "Crasher C", "Speed A"]

@@ -6,10 +6,14 @@ import com.xiii.watchduck.exempt.ExemptType;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.event.impl.PacketPlaySendEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.FutureTask;
 
 public abstract class Check {
 
@@ -49,6 +53,23 @@ public abstract class Check {
             return;
         }
     }
+    public Block getBlock(final Location location) {
+        if (location.getWorld().isChunkLoaded(location.getBlockX() >> 4, location.getBlockZ() >> 4)) {
+            return location.getBlock();
+        } else {
+            FutureTask<Block> futureTask = new FutureTask<>(() -> {
+                location.getWorld().loadChunk(location.getBlockX() >> 4, location.getBlockZ() >> 4);
+                return location.getBlock();
+            });
+            Bukkit.getScheduler().runTask(WatchDuck.instance, futureTask);
+            try {
+                return futureTask.get();
+            } catch (final Exception exception) {
+                exception.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     public void fail(Object a, Object b) {
         if(data != null) {
@@ -57,7 +78,7 @@ public abstract class Check {
             }
             if(buffer > maxBuffer || addBuffer == 0) {
                 //sendMessage("fail a=" + addBuffer + " b=" + buffer + " r=" + removeBuffer + " silent=" + silent + " kick=" + kickable + " ban=" + bannable);
-                data.flag(this, WatchDuck.instance.configUtils.getIntFromConfig("checks", name + ".Punishments.punishVL") - 1, a, b, buffer, maxBuffer);
+                data.flag(this, WatchDuck.instance.configUtils.getIntFromConfig("checks", name + ".Punishments.punishVL", 3) - 1, a, b, buffer, maxBuffer);
 
             }
         }

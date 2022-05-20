@@ -60,6 +60,16 @@ public class BoundingBox {
         this.maxZ = player.getLocation().getZ() + 0.3D;
     }
 
+    public BoundingBox(Block block) {
+        this.minX = io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMinX();
+        this.minY = io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMinY();
+        this.minZ = io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMinZ();
+        this.maxX =io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMaxX();
+        this.maxY = io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMaxY();
+        this.maxZ = io.github.retrooper.packetevents.utils.boundingbox.BoundingBox.of(block).getMaxZ();
+    }
+
+
     public BoundingBox move(final double x, final double y, final double z) {
         this.minX += x;
         this.minY += y;
@@ -177,6 +187,13 @@ public class BoundingBox {
             default:
                 return 0;
         }
+    }
+
+    public Vector min() {
+        return new Vector(minX,minY,minZ);
+    }
+    public Vector max() {
+        return new Vector(maxX,maxY,maxZ);
     }
 
 }
