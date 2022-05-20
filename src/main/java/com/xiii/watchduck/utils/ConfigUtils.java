@@ -41,7 +41,7 @@ public class ConfigUtils {
     }
 
 
-    public boolean getBooleanFromConfig(String configName, String value) {
+    public boolean getBooleanFromConfig(String configName, String value, boolean defaultvalue) {
         if(configName.equalsIgnoreCase("config")) {
             if (config == null) {
                 reloadConfigs();
@@ -55,9 +55,9 @@ public class ConfigUtils {
             }
             return checks.getBoolean(value);
         }
-        return false;
+        return defaultvalue;
     }
-    public String getStringFromConfig(String configName, String value) {
+    public String getStringFromConfig(String configName, String value, String defaultvalue) {
         if(configName.equalsIgnoreCase("config")) {
             if (config == null) {
                 watchduck.reloadConfig();
@@ -71,7 +71,7 @@ public class ConfigUtils {
             }
             return checks.getString(value);
         }
-        return "";
+        return defaultvalue;
     }
 
     public String getConvertedStringFromConfig(String configName, Player player, String value) {
@@ -112,7 +112,7 @@ public class ConfigUtils {
         }
         return "";
     }
-    public int getIntFromConfig(String configName, String value) {
+    public int getIntFromConfig(String configName, String value, int defaultvalue) {
         if(configName.equalsIgnoreCase("config")) {
             if (config == null) {
                 watchduck.reloadConfig();
@@ -126,9 +126,9 @@ public class ConfigUtils {
             }
             return checks.getInt(value);
         }
-        return 0;
+        return defaultvalue;
     }
-    public double getDoubleFromConfig(String configName, String value) {
+    public double getDoubleFromConfig(String configName, String value, double defaultvalue) {
         if(configName.equalsIgnoreCase("config")) {
             if (config == null) {
                 watchduck.reloadConfig();
@@ -142,7 +142,7 @@ public class ConfigUtils {
             }
             return checks.getDouble(value);
         }
-        return 0;
+        return defaultvalue;
     }
 
 
