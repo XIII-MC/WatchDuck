@@ -6,6 +6,7 @@ import com.xiii.watchduck.check.CheckInfo;
 import io.github.retrooper.packetevents.event.impl.PacketPlayReceiveEvent;
 import io.github.retrooper.packetevents.packettype.PacketType;
 import io.github.retrooper.packetevents.packetwrappers.play.in.chat.WrappedPacketInChat;
+import io.github.retrooper.packetevents.packetwrappers.play.in.clientcommand.WrappedPacketInClientCommand;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ChatA extends Check {
             "I bet you like daddy pounding you so hard that your knees give out and drag your face f");
 
     public void onPacket(PacketPlayReceiveEvent packet) {
-        if(packet.getPacketId() == PacketType.Play.Client.CHAT || packet.getPacketId() == PacketType.Play.Client.CLIENT_COMMAND) {
+        if(packet.getPacketId() == PacketType.Play.Client.CHAT) {
             WrappedPacketInChat chat = new WrappedPacketInChat(packet.getNMSPacket());
             String message = chat.getMessage();
             if(messages.contains(message)) {
