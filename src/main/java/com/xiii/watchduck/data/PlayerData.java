@@ -112,6 +112,7 @@ public class PlayerData {
     public long lastice;
     public boolean onIce;
     public boolean onSlime;
+    public boolean onSlime2;
     public long lastslime;
     public Entity target;
     public Entity lasttargetreach;
@@ -170,6 +171,7 @@ public class PlayerData {
         registerCheck(new CrasherC());
         registerCheck(new ChatA());
         registerCheck(new ChatB());
+        registerCheck(new BadPacketI());
         Bukkit.getScheduler().runTaskTimerAsynchronously(WatchDuck.instance, ()-> {
             if(lasttargetreach != null) {
                 targetpastlocations.addLocation(lasttargetreach.getLocation());

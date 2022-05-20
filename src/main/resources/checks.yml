@@ -153,6 +153,20 @@ BadPacket H:
   Messages:
     broadcastPunish: true
 
+BadPacket I:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 1
+    maxBuffer: 2
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
 KillAura A:
   silent: false
   enabled: true

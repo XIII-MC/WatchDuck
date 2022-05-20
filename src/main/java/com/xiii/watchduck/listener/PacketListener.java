@@ -233,11 +233,23 @@ public class PacketListener extends PacketListenerAbstract {
         data.nearTrapdoor = this.isCollidingAtLocation(data,1.801, material -> material.toString().contains("TRAP_DOOR"));
         data.blockabove = b.stream().filter(block -> block.getLocation().getY() - data.to.getY() > 1.5)
                 .anyMatch(block -> block.getType() != Material.AIR) || data.nearTrapdoor;
-        data.onSlime = b.stream().anyMatch(block -> block.getType().toString().equalsIgnoreCase("SLIME_BLOCK"));
+        data.onSlime = b.stream().anyMatch(block -> block.getType().toString().contains("SLIME"));
+        for(int i = 256; i > 0; i--) {
+            Location loc = data.to.clone();
+            loc.setY(loc.getY() - i);
+            if(getBlock(loc).getType() == Material.SLIME_BLOCK) {
+                data.onSlime2 = true;
+            }
+        }
         data.nearPiston = b.stream().anyMatch(block -> block.getType().toString().contains("PISTON"));
         data.onLowBlock = b.stream().anyMatch(block -> block.getType().toString().contains("TRAP_DOOR") || block.getType().toString().contains("BED") || block.getType().toString().contains("CARPET") || block.getType().toString().contains("REPEATER") || block.getType().toString().contains("COMPARATOR") || block.getType().toString().contains("SLAB") || block.getType().toString().contains("SNOW") || block.getType().toString().contains("CAULDRON") || block.getType().toString().contains("BREWING") || block.getType().toString().contains("HOPPER") || block.getType().toString().contains("DETECTOR") || block.getType().toString().contains("ENCHANTING") || block.getType().toString().contains("END_PORTAL") || block.getType().toString().contains("POT") || block.getType().toString().contains("SOUL_SAND"));
         if(data.onIce) {
             data.lastice = System.currentTimeMillis();
+        }
+        if(data.onSlime) {
+            data.sinceSlimeTicks = 0;
+        } else {
+            data.sinceSlimeTicks++;
         }
         final Location location = data.getPlayer().getLocation();
         final int var1 = NumberConversions.floor(location.getX());
