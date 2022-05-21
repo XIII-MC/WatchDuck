@@ -62,7 +62,7 @@ public class WatchDuck extends JavaPlugin {
 
     public void discordthing() {
         if(configUtils.getStringFromConfig("config", "discordWebhookurl", "").equals("")) {
-            Bukkit.getConsoleSender().sendMessage("§8[§b§lWATCHDUCK§8] §cPlease add the Webhook URL to the Config and reload§f!");
+            Bukkit.getConsoleSender().sendMessage("§8[§b§lWATCHDUCK§8] §cPlease add the Webhook URL to the 'config.yml' and reload§f!");
             return;
         }
         WebhookClientBuilder builder = new WebhookClientBuilder(configUtils.getStringFromConfig("config", "discordWebhookurl", ""));

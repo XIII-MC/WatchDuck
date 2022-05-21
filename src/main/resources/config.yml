@@ -5,4 +5,4 @@ broadcastMessage: "§b§lWatchDuck §8»§f §c%player%§f has been removed for 
 testMode: true
 sendAlertsToDiscord: true
 discordWebhookurl: "https://discordapp.com/api/webhooks/977181668131622952/oh37AtcwJakYP7nBbf4WLF8vQu4neHQuE8L69DMaFmgZh1JYYE7Q0QGztD8qBwEyw-K0"
-sendAlertToDiscordFromChecks: ["BadPacketA", "Crasher A", "Crasher B", "Crasher C", "Speed A"]
+sendAlertToDiscordFromChecks: ["BadPacket A", "BadPacket B", "BadPacket C", "BadPacket D", "BadPacket E", "BadPacket F", "BadPacket G", "BadPacket H", "BadPacket I", "BadPacket J",  "Crasher A", "Crasher B", "Crasher C", "Speed A", "Invalid A", "Fly A", "Fly B", "Fly C", "vClip A", "vClip B", "BadPacket A", "Jump A", "Chat A", "Chat B", "Chat C", "KillAura A", "KillAura B", "KillAura C", "Scaffold A", "Scaffold B", "Tower A"]
