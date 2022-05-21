@@ -17,6 +17,8 @@ public class BadPacketI extends Check{
     SampleList<Double> balances = new SampleList<>(4);
 
     public void onPacket(PacketPlayReceiveEvent packet) {
+
+        //Kind of useless check since BadPacket B already checks for FLYINGs, but keep it since it might detect faster
         if(packet.getPacketId() == PacketType.Play.Client.FLYING) {
             long diff = System.currentTimeMillis() - lastms;
             long diff2 = System.currentTimeMillis() - lastPosition;

@@ -156,6 +156,8 @@ public class PlayerData {
         registerCheck(new BadPacketF());
         registerCheck(new BadPacketG());
         registerCheck(new BadPacketH());
+        registerCheck(new BadPacketI());
+        registerCheck(new BadPacketJ());
         registerCheck(new InvalidA());
         registerCheck(new JumpA());
         registerCheck(new vClipA());

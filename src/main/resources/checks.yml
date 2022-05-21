@@ -40,7 +40,6 @@ Chat B:
   Messages:
     broadcastPunish: true
 
-
 BadPacket A:
   silent: false
   enabled: true
@@ -116,7 +115,7 @@ BadPacket F:
   enabled: true
   Buffer:
     addBuffer: 1
-    maxBuffer: 5
+    maxBuffer: 10
     removeBuffer: 0.1
   Punishments:
     kick: false
@@ -160,6 +159,20 @@ BadPacket I:
     addBuffer: 1
     maxBuffer: 2
     removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 3
+  Messages:
+    broadcastPunish: true
+
+BadPacket J:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0.5
+    maxBuffer: 40
+    removeBuffer: 1
   Punishments:
     kick: true
     ban: false
@@ -308,6 +321,34 @@ Fly C:
     broadcastPunish: true
 
 Tower A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 6
+  Messages:
+    broadcastPunish: true
+
+Scaffold A:
+  silent: false
+  enabled: true
+  Buffer:
+    addBuffer: 0
+    maxBuffer: 0
+    removeBuffer: 0
+  Punishments:
+    kick: true
+    ban: false
+    punishVL: 6
+  Messages:
+    broadcastPunish: true
+
+Scaffold B:
   silent: false
   enabled: true
   Buffer:
