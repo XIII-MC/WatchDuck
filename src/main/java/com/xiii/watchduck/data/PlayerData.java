@@ -281,7 +281,7 @@ public class PlayerData {
             List<String> array = WatchDuck.instance.configUtils.getConfig("config").getStringList("sendAlertToDiscordFromChecks");
             for(String b : array) {
                 if(check.name.equalsIgnoreCase(b)) {
-                    WatchDuck.instance.alertsToSend.add(player.getName()  + " failed " + check.name + " (x" + getPing(player) + ")"); //Replace getPing(player) by the amount of flags
+                    WatchDuck.instance.alertsToSend.add(player.getName()  + " failed " + check.name); //Replace getPing(player) by the amount of flags // + " (x" + getFlags(name, check.name) + ")"
                 }
             }
             for (Player p : Bukkit.getOnlinePlayers()) {
