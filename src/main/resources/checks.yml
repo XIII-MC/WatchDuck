@@ -1,3 +1,28 @@
+#WatchDuck 'checks.yml' config file. Quick config explanations:
+
+
+# Check Definition/Explanations.
+# Current State: Check's State, Stability
+# Bypass Difficulty: How hard is it to bypass this check
+Check A: #Check = Check name | A = Check type. Changing this WILL break the config, check and might return console errors.
+  silent: false #Must be BOOLEAN | Toggles setback for the check.
+  enabled: false #Must be BOOLEAN | Toggles check activity.
+  Buffer:
+    addBuffer: 0 #Must be NUMBER | Number added to buffer.
+    maxBuffer: 0 #Must be NUMBER | Maximum value for buffer before sending alerts.
+    removeBuffer: 0 #Must be NUMBER | Number removed from buffer.
+  Punishements:
+    kick: false #Must be BOOLEAN | Allows WatchDuck to kick the player when his VL goes above the maximum punishVL.
+    ban: false #Must be BOOLEAN | Allows WatchDuck to ban the player when his VL goes above the maximum punishVL (Will ban for 'Rule Breaking' by default.)
+    punishVL: 0 #Must be NUMBER | Maximum punishVL before being punished.
+  Message:
+    broadcastPunish: false #Must be BOOLEAN | Allows or not to broadcast a message saying "XXX goes removed for Unfair Advantage.", can be changed in 'config.yml'.
+
+#Config last update: 21/05/2022 | 11:45 (CEST)
+
+# Simple speed limit.
+# Current State: Finished, Stable
+# Bypass Difficulty: Medium
 Speed A:
   silent: false
   enabled: true
@@ -12,6 +37,9 @@ Speed A:
   Messages:
     broadcastPunish: true
 
+# Blocks AutoGroomer sentences.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 Chat A:
   silent: false
   enabled: true
@@ -26,6 +54,9 @@ Chat A:
   Messages:
     broadcastPunish: true
 
+# Blocks racial slurs.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 Chat B:
   silent: false
   enabled: true
@@ -40,6 +71,9 @@ Chat B:
   Messages:
     broadcastPunish: true
 
+# TPAura/InfiniteAura check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket A:
   silent: false
   enabled: true
@@ -54,6 +88,9 @@ BadPacket A:
   Messages:
     broadcastPunish: true
 
+# Detects Regen while standing still.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket B:
   silent: false
   enabled: true
@@ -68,6 +105,9 @@ BadPacket B:
   Messages:
     broadcastPunish: true
 
+# Checks for spoofed abilities.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket C:
   silent: false
   enabled: true
@@ -82,6 +122,9 @@ BadPacket C:
   Messages:
     broadcastPunish: true
 
+# A basic NoSlow check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Easy
 BadPacket D:
   silent: false
   enabled: true
@@ -96,6 +139,9 @@ BadPacket D:
   Messages:
     broadcastPunish: true
 
+# FastEat/FastUse/FastConsume check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket E:
   silent: false
   enabled: true
@@ -110,6 +156,9 @@ BadPacket E:
   Messages:
     broadcastPunish: true
 
+# Timer check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Hard
 BadPacket F:
   silent: false
   enabled: true
@@ -124,6 +173,9 @@ BadPacket F:
   Messages:
     broadcastPunish: true
 
+# Post block placement check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket G:
   silent: false
   enabled: true
@@ -138,6 +190,9 @@ BadPacket G:
   Messages:
     broadcastPunish: true
 
+# Blocks Crasher/Lagging exploits.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 BadPacket H:
   silent: false
   enabled: true
@@ -152,6 +207,9 @@ BadPacket H:
   Messages:
     broadcastPunish: true
 
+# Detects Regen while moving.
+# Current State: Testing, Stable
+# Bypass Difficulty: Impossible
 BadPacket I:
   silent: false
   enabled: true
@@ -166,6 +224,9 @@ BadPacket I:
   Messages:
     broadcastPunish: true
 
+# Detects Regen while moving.
+# Current State: Testing, Stable
+# Bypass Difficulty: Impossible
 BadPacket J:
   silent: false
   enabled: true
@@ -180,6 +241,9 @@ BadPacket J:
   Messages:
     broadcastPunish: true
 
+# Basic NoSwing check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Very Easy
 KillAura A:
   silent: false
   enabled: true
@@ -194,6 +258,9 @@ KillAura A:
   Messages:
     broadcastPunish: true
 
+# Basic post arm swing check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Very Easy
 KillAura B:
   silent: false
   enabled: true
@@ -208,6 +275,9 @@ KillAura B:
   Messages:
     broadcastPunish: true
 
+# MultiAura check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 KillAura C:
   silent: false
   enabled: true
@@ -222,6 +292,9 @@ KillAura C:
   Messages:
     broadcastPunish: true
 
+# Maximum speed limit.
+# Current State: Finished, Stable
+# Bypass Difficulty: Medium
 Invalid A:
   silent: false
   enabled: true
@@ -236,6 +309,9 @@ Invalid A:
   Messages:
     broadcastPunish: true
 
+# Low jump check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Easy
 Jump A:
   silent: false
   enabled: true
@@ -250,6 +326,9 @@ Jump A:
   Messages:
     broadcastPunish: true
 
+# Upwards vClip check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 vClip A:
   silent: false
   enabled: true
@@ -264,6 +343,9 @@ vClip A:
   Messages:
     broadcastPunish: true
 
+# Downwards vClip check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 vClip B:
   silent: false
   enabled: true
@@ -278,6 +360,9 @@ vClip B:
   Messages:
     broadcastPunish: true
 
+# Simple prediction fly check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Medium
 Fly A:
   silent: false
   enabled: true
@@ -292,6 +377,9 @@ Fly A:
   Messages:
     broadcastPunish: true
 
+# Maximum airTick limit.
+# Current State: Finished, Stable
+# Bypass Difficulty: Medium
 Fly B:
   silent: false
   enabled: true
@@ -306,6 +394,9 @@ Fly B:
   Messages:
     broadcastPunish: true
 
+# Repeated yMotion check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Medium
 Fly C:
   silent: false
   enabled: true
@@ -320,6 +411,9 @@ Fly C:
   Messages:
     broadcastPunish: true
 
+# Towering up too fast.
+# Current State: Finished, Stable
+# Bypass Difficulty: Hard
 Tower A:
   silent: false
   enabled: true
@@ -334,6 +428,9 @@ Tower A:
   Messages:
     broadcastPunish: true
 
+# Impossible pitch angle check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Easy
 Scaffold A:
   silent: false
   enabled: true
@@ -348,6 +445,9 @@ Scaffold A:
   Messages:
     broadcastPunish: true
 
+# Expend check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Easy
 Scaffold B:
   silent: false
   enabled: true
@@ -362,6 +462,9 @@ Scaffold B:
   Messages:
     broadcastPunish: true
 
+# Command related crashers.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 Crasher A:
   silent: false
   enabled: true
@@ -376,6 +479,9 @@ Crasher A:
   Messages:
     broadcastPunish: true
 
+# Plugins related crashers.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 Crasher B:
   silent: false
   enabled: true
@@ -390,6 +496,9 @@ Crasher B:
   Messages:
     broadcastPunish: true
 
+# MASSIVE PacketSpam check.
+# Current State: Finished, Stable
+# Bypass Difficulty: Impossible
 Crasher C:
   silent: false
   enabled: true
