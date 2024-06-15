@@ -1,2 +1,2 @@
 # WatchDuck
-WatchDuck Anti-Cheat
+WatchDuck Anti-Cheat that was used on NoRules.HVH
